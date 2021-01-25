@@ -12,3 +12,7 @@
 img {
   width: 100%;
 }
+
+.is-hidden {
+  display: none;
+}
