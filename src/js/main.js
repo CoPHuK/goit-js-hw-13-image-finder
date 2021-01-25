@@ -8,7 +8,7 @@ refs.loadMoreBtnnRef.addEventListener('click', () => {
   searchUtils.imgSearching().then(data => {
     MakeMarkup(data);
     timeout();
-    hideMoreBtn(data);
+    visibilityMoreBtn(data);
   });
 });
 
@@ -23,7 +23,7 @@ function formSubmit(event) {
 
   searchUtils.imgSearching().then(result => {
     MakeMarkup(result);
-    ShowMoreBtn(result);
+    visibilityMoreBtn(result);
   });
 }
 
@@ -31,17 +31,34 @@ function MakeMarkup(result) {
   const markup = cardTpl(result.hits);
   refs.galleryRef.insertAdjacentHTML('beforeend', markup);
 }
-function ShowMoreBtn(result) {
-  if (result.totalHits > 12) {
+
+function visibilityMoreBtn(result) {
+  console.log(searchUtils.resultLength - 1);
+  console.log(result.hits.length);
+
+  console.log(!result.hits.length === 12);
+  console.log(result.hits.length === result.totalHits);
+  if (
+    result.hits.length < searchUtils.resultLength - 1 ||
+    result.hits.length === result.totalHits
+  ) {
+    refs.loadMoreBtnnRef.classList.add('is-hidden');
+  } else {
     refs.loadMoreBtnnRef.classList.remove('is-hidden');
   }
 }
 
-function hideMoreBtn(result) {
-  if (result.hits.length < 13) {
-    refs.loadMoreBtnnRef.classList.add('is-hidden');
-  }
-}
+// function hideMoreBtn(result) {
+//   if (result.hits.length < 13) {
+//     refs.loadMoreBtnnRef.classList.add('is-hidden');
+//   }
+// }
+
+// function ShowMoreBtn(result) {
+//   if (result.totalHits > 12) {
+//     refs.loadMoreBtnnRef.classList.remove('is-hidden');
+//   }
+// }
 
 function timeout() {
   setTimeout(() => {
